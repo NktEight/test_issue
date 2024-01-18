@@ -26,8 +26,8 @@ public class Main {
 
         ObjectMapper om = new ObjectMapper();
 
-        File file = new File("src/main/resources/tickets.json");
-//        File file = new File("tickets.json");
+//        File file = new File("src/main/resources/tickets.json");
+        File file = new File("tickets.json");
         JsonFactory jfactory = new JsonFactory();
         JsonParser jParser = jfactory.createParser(file);
 
@@ -38,7 +38,7 @@ public class Main {
             }
 
         }
-        DateFormat df = new SimpleDateFormat("dd.MM.yy hh:mm");
+        DateFormat df = new SimpleDateFormat("dd.MM.yy HH:mm");
         HashMap<String, Long> carrierMinTime = new HashMap<>();
         List<Integer> priceList = new ArrayList<>();
         for (FlightDto flightDto : flightDtos) {
@@ -56,6 +56,10 @@ public class Main {
         float floatMedian = getMedianOfNumber(priceList.stream().mapToInt(Integer::intValue).toArray());
         float floatAverage = priceList.stream().reduce(0, Integer::sum).floatValue() / priceList.size();
         float averageMedianDiff = floatAverage - floatMedian;
+        for (Map.Entry<String, Long> entrySet : carrierMinTime.entrySet()) {
+            System.out.println(entrySet.getKey() + " : " + entrySet.getValue() / 60 / 1000);
+
+        }
         System.out.println(carrierMinTime);
         System.out.println(averageMedianDiff);
 
